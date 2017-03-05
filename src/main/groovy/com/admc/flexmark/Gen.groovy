@@ -4,10 +4,10 @@ import com.vladsch.flexmark.samples.BasicSample
 import groovy.text.SimpleTemplateEngine
 
 class Gen {
-    final static String DEFAULT_BPTOP_RES_PATH =
-      'boilerplates/basic-top.html'
-    final static String DEFAULT_BPBOTTOM_RES_PATH =
-      'boilerplates/basic-bottom.html'
+    final static String BP_PREFIX = 'boilerplates/'
+    final static String DEFAULT_BP_BASE = 'basic'
+    final static String BP_TOP_SUFFIX = '-top.html'
+    final static String BP_BOTTOM_SUFFIX = '-bottom.html'
 
     private def boilerplatePre  // Class it properly when fucking API is online!
     private String boilerplatePost
@@ -51,7 +51,8 @@ Dimensions | Megapixels
 
     void setTitle(String inTitle) {
         substrMap.title = inTitle
-        substrMap.headerInsertion = "<header>\n  <h1>$inTitle</h1>\n</header>\n"
+        //substrMap.headerInsertion = "<header>\n  <h1>$inTitle</h1>\n</header>\n"
+        substrMap.headerInsertion = "<h1>$inTitle</h1>\n"
     }
 
     static private String SYNTAX_MSG = 
@@ -67,6 +68,7 @@ Dimensions | Megapixels
             System.err.println "No such file: ${sa[0]}"
             System.exit 2
         }
+        //println new Gen(sa[0], 'bootstrap').html(f.text)
         println new Gen(sa[0]).html(f.text)
         /*
         Gen gen = new Gen('Fancy Titlage')
@@ -81,7 +83,7 @@ Dimensions | Megapixels
         if (!substrMap.title)
             throw new Error('Have not called setTitle for this Gen object')
         (boilerplatePre.make(substrMap).toString()
-          + '\n<h1>Default? Common</h1>'
+          + '\n<section>\n<h1>Default? Common</h1>'
           + BasicSample.commonMark(mdText)
           + '\n</section>\n<section>\n<h1>Explicit Common</h1>'
           + BasicSample.explicitCommon(mdText)
@@ -95,7 +97,7 @@ Dimensions | Megapixels
           + BasicSample.pegdown(mdText)
           + '\n</section>\n<section>\n<h1>GFM</h1>'
           + BasicSample.gfm(mdText)
-          + '\n' + boilerplatePost)
+          + '\n</section>\n' + boilerplatePost)
     }
 
     String html(String mdText) {
@@ -105,12 +107,12 @@ Dimensions | Megapixels
           + BasicSample.explicitCommon(mdText) + '\n' + boilerplatePost)
     }
 
-    Gen(String inTitle) throws IOException {
+    Gen(String inTitle, String bpBase=DEFAULT_BP_BASE) throws IOException {
         InputStream iStream
 
         iStream = Thread.currentThread().
           getContextClassLoader().getResourceAsStream(
-          DEFAULT_BPTOP_RES_PATH )
+          BP_PREFIX + bpBase + BP_TOP_SUFFIX)
         if (!iStream)
             throw new IOException(
               "Boilerplate inaccessible: $DEFAULT_BPTOP_RES_PATH ")
@@ -118,7 +120,7 @@ Dimensions | Megapixels
           createTemplate(iStream.text)
         iStream = Thread.currentThread().
           getContextClassLoader().getResourceAsStream(
-          DEFAULT_BPBOTTOM_RES_PATH )
+          BP_PREFIX + bpBase + BP_BOTTOM_SUFFIX)
         if (!iStream)
             throw new IOException(
               "Boilerplate inaccessible: $DEFAULT_BPBOTTOM_RES_PATH ")
