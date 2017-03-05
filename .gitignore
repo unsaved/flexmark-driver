@@ -1,0 +1,10 @@
+.gradle
+.*.sw?
+*~
+*.bak
+~*
+.~*
+/local*
+/build
+/gradle-app.setting
+gradle.properties
