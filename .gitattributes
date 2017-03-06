@@ -6,6 +6,8 @@
 *.csh eol=lf
 *.pem eol=lf
 *.cmd eol=crlf
+*.md eol=crlf
+*.creole eol=crlf
 *.bat eol=crlf
 *.BAT eol=crlf
 *.CMD eol=crlf

@@ -7,6 +7,7 @@ import com.vladsch.flexmark.ext.footnotes.FootnoteExtension
 import com.vladsch.flexmark.ext.tables.TablesExtension
 import com.vladsch.flexmark.ext.typographic.TypographicExtension
 import com.vladsch.flexmark.ext.toc.TocExtension
+import com.vladsch.flexmark.ext.autolink.AutolinkExtension
 import com.vladsch.flexmark.html.HtmlRenderer
 import com.vladsch.flexmark.parser.Parser
 import com.vladsch.flexmark.parser.ParserEmulationProfile
@@ -22,7 +23,8 @@ class BasicSample {
         FootnoteExtension.create(),
         TablesExtension.create(),
         TypographicExtension.create(),
-        TocExtension.create()
+        TocExtension.create(),
+        AutolinkExtension.create()
     ]
 
     static String commonMark(String inS) {

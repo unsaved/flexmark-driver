@@ -56,10 +56,10 @@ Dimensions | Megapixels
     }
 
     static private String SYNTAX_MSG = 
-      $/flexmark-driver file/path.md 'The Title'/$
+      $/flexmark-driver file/path.md ['The Title']/$
 
     static void main(String[] sa) {
-        if (sa.length != 2) {
+        if (sa.length < 1 || sa.length > 2) {
             System.err.println SYNTAX_MSG
             System.exit 2
         }
@@ -69,11 +69,7 @@ Dimensions | Megapixels
             System.exit 2
         }
         //println new Gen(sa[0], 'bootstrap').html(f.text)
-        println new Gen(sa[0]).html(f.text)
-        /*
-        Gen gen = new Gen('Fancy Titlage')
-        println gen.cf(sampleMd)
-        */
+        println new Gen(sa.length > 1 ? sa[1] : sa[0]).html(f.text)
     }
 
     /**
