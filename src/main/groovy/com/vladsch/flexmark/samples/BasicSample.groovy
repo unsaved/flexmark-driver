@@ -29,6 +29,8 @@ class BasicSample {
 
     static String commonMark(String inS) {
         MutableDataSet options = new MutableDataSet()
+        // Seems to have no effect:
+        //options.set HtmlRenderer.PERCENT_ENCODE_URLS, true
         options.set Parser.EXTENSIONS, optList
         Parser parser = Parser.builder().build()
         Node document = parser.parse inS
